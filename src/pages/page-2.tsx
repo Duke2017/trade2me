@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { PageProps, Link } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -27,36 +27,53 @@ const rows = [
   createData('Gingerbread', 356),
 ];
 
-const SecondPage = () => (
-  <Layout>
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Price</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.price}</TableCell>
+const SecondPage: React.FC<PageProps> = () => {
+  const fetchData = async () => {
+    const results = await fetch('../.netlify/functions/hello');
+    if (results.ok) {
+      const json = await results.json();
+      setMessage(json.message);
+    } else {
+      console.error("Ошибка HTTP: " + results.status);
+    }
+  }
+
+  const [message, setMessage] = React.useState('');
+  React.useEffect(()=>{
+    fetchData();
+  },[])
+
+  return (
+    <Layout>
+      <h1>Hi from the {message}</h1>
+      <p>Welcome to page 2</p>
+      <Link to="/">Go back to the homepage</Link>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Price</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </Layout>
-)
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.price}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Layout>
+  )
+}
 
 export const Head = () => <Seo title="Page two" />
 
