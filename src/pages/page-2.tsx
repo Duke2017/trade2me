@@ -12,11 +12,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import ApolloClient from "apollo-boost";
-import { InMemoryCache, ApolloProvider, gql } from '@apollo/client';
-const client = new ApolloClient({
-  uri: "/.netlify/functions/graphql"
-});
+// import { ApolloClient, ApolloProvider, gql } from '@apollo/client';
+// const client = new ApolloClient({
+//   uri: "/.netlify/functions/graphql"
+// });
 
 // client
 //   .query({
