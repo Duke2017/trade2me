@@ -12,20 +12,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-// import { ApolloClient, ApolloProvider, gql } from '@apollo/client';
-// const client = new ApolloClient({
-//   uri: "/.netlify/functions/graphql"
-// });
-
-// client
-//   .query({
-//     query: gql`
-//     query hello{
-//       hello
-//     }
-//     `,
-//   })
-//   .then((result) => console.log(result));
+import { ApolloClient, ApolloProvider, InMemoryCache, gql } from '@apollo/client';
+const client = new ApolloClient({
+  uri: "/.netlify/functions/server",
+  cache: new InMemoryCache()
+});
 
 function createData(
   name: string,
@@ -44,13 +35,16 @@ const rows = [
 
 const SecondPage: React.FC<PageProps> = () => {
   const fetchData = async () => {
-    const results = await fetch('../.netlify/functions/hello');
-    if (results.ok) {
-      const json = await results.json();
-      setMessage(json.message);
-    } else {
-      console.error("Ошибка HTTP: " + results.status);
-    }
+
+    client
+    .query({
+      query: gql`
+      query hello{
+        hello
+      }
+      `,
+    })
+    .then((result) => setMessage(result.data.hello));
   }
 
   const [message, setMessage] = React.useState('');

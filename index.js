@@ -1,36 +1,26 @@
-const { ApolloServer, gql } = require('apollo-server');
-
-const books = [
-    {
-      title: 'The Awakening',
-      author: 'Kate Chopin',
-    },
-    {
-      title: 'City of Glass',
-      author: 'Paul Auster',
-    },
-  ];
-
-const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
+import { MongoClient, ServerApiVersion } from "mongodb"
+import { mongoPassword } from "../../backend/mongopass"
+const uri = `mongodb+srv://bel2017:${mongoPassword}@cluster0.xepz1rt.mongodb.net/?retryWrites=true&w=majority`
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+})
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect()
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 })
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    )
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close()
   }
-
-  type Query {
-    books: [Book]
-  }
-`;
-
-const resolvers = {
-    Query: {
-      books: () => books,
-    },
-  };
-
-const server = new ApolloServer({ typeDefs, resolvers });
-
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+}
+run().catch(console.dir)
