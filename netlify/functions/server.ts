@@ -1,17 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateLambdaHandler, handlers } from '@as-integrations/aws-lambda';
 import { typeDefs } from '../../backend/schema'
-
-import { mongoPassword } from "../../backend/mongopass"
-
-const uri = `mongodb+srv://bel2017:${mongoPassword}@cluster0.xepz1rt.mongodb.net/?retryWrites=true&w=majority`
-
-
-const resolvers = {
-  Query: {
-    hello: () => 'world',
-  },
-};
+import { resolvers } from '../../backend/resolvers'
 
 const server = new ApolloServer({
   typeDefs,
@@ -35,6 +25,3 @@ export const handler = startServerAndCreateLambdaHandler(
     ],
   },
 );
-
-
-run().catch(console.dir)
