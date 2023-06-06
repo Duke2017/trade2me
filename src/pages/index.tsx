@@ -1,5 +1,5 @@
 import * as React from "react"
-import { PageProps, Link } from "gatsby"
+import { PageProps, Link, HeadFC } from "gatsby"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -12,69 +12,60 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import { ApolloClient, ApolloProvider, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 const client = new ApolloClient({
   uri: "/.netlify/functions/server",
   cache: new InMemoryCache()
 });
 
-function createData(
-  name: string,
-  price: number
-) {
-  return { name, price };
+type DataProps = {
+  site: {
+    buildTime: string
+  }
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356),
-];
-
-const SecondPage: React.FC<PageProps> = () => {
+const IndexPage: React.FC<PageProps> = () => {
   const fetchData = async () => {
-
-    client
-    .query({
+    client.query({
       query: gql`
-      query hello{
-        hello
-      }
+        query {
+          allAdverts {
+            id
+            title
+            description
+          }
+        }
       `,
     })
-    .then((result) => setMessage(result.data.hello));
+    .then((result) => setAdverts(result.data.allAdverts));
   }
 
-  const [message, setMessage] = React.useState('');
+  const [adverts, setAdverts] = React.useState([]);
   React.useEffect(()=>{
     fetchData();
   },[])
 
   return (
     <Layout>
-      <h1>Hi from the {message}</h1>
-      <p>Welcome to page 2</p>
-      <Link to="/">Go back to the homepage</Link>
+      <p>All adverts:</p>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Price</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell align="right">Description</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {adverts.map((row:any) => (
               <TableRow
-                key={row.name}
+                key={row.title}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.title}
                 </TableCell>
-                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">{row.description}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -84,6 +75,11 @@ const SecondPage: React.FC<PageProps> = () => {
   )
 }
 
-export const Head = () => <Seo title="Page two" />
+/**
+ * Head export to define metadata for the page
+ *
+ * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
+ */
+export const Head: HeadFC<DataProps> = () => <Seo title="Home" />
 
-export default SecondPage
+export default IndexPage

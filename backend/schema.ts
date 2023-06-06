@@ -1,6 +1,7 @@
 export const typeDefs = `#graphql
   type Query {
-    allAdverts(id: ID!): Advert!
+    allAdverts: [Advert!]!
+    advert(id: ID!): Advert! 
   }
 
   type Advert {
@@ -14,6 +15,8 @@ export const typeDefs = `#graphql
     description: String
   }
   type Mutation {
-    createAdvert(advertInput: AdvertInput): Advert!
+    createAdvert(advertInput: AdvertInput): Advert
+    updateAdvert(id: ID!, advertInput: AdvertInput): Advert!
+    deleteAdvert(id: ID!): Boolean
   }
 `;
