@@ -9,11 +9,15 @@ import * as React from "react"
 
 import Header from "./header"
 
-const Layout = ({ children }) => {
+type layout = {
+  children: JSX.Element,
+  headerButtonsFor: string
+}
+const Layout = ({ children, headerButtonsFor }:layout) => {
 
   return (
     <>
-      <Header/>
+      <Header forPage={headerButtonsFor}/>
       <div>{children}</div>
     </>
   )

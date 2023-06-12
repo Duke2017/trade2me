@@ -4,18 +4,16 @@ import { PageProps, Link, HeadFC } from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-import AdvertsList from "../components/advertsList";
-
 type DataProps = {
   site: {
     buildTime: string
   }
 }
 
-const IndexPage: React.FC<PageProps> = () => {
+const AdvertPage: React.FC<PageProps> = () => {
   return (
-    <Layout headerButtonsFor="main">
-      <AdvertsList/>
+    <Layout headerButtonsFor="advert">
+      <div>old advert</div>
     </Layout>
   )
 }
@@ -27,4 +25,4 @@ const IndexPage: React.FC<PageProps> = () => {
  */
 export const Head: HeadFC<DataProps> = () => <Seo title="Home" />
 
-export default IndexPage
+export default AdvertPage

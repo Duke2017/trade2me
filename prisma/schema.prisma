@@ -13,5 +13,7 @@ datasource db {
 model Advert {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String
+  price       Int
   description String
+  picture     String
 }
