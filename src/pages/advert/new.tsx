@@ -2,11 +2,12 @@ import * as React from "react"
 import { PageProps, HeadFC, navigate } from "gatsby"
 import { Box, Button, TextField } from "@mui/material"
 import { gql, useMutation } from "@apollo/client"
+import { NumericFormat, NumericFormatProps } from 'react-number-format';
 
 import Layout from "../../components/layout"
 import Seo from "../../components/seo"
 
-import { typeDefs } from '../../../backend/schema'
+import { GET_ALLADVERTS, CREATE_ADVERT } from '../../../backend/requests'
 
 type DataProps = {
   site: {
@@ -14,49 +15,55 @@ type DataProps = {
   }
 }
 
+interface State {
+  picture: string;
+  title: string;
+  price: number | '';
+  description: string;
+}
+
+interface CustomProps {
+  onChange: (event: { target: { name: string; value: string } }) => void;
+  name: string;
+}
+const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(
+  function NumericFormatCustom(props, ref) {
+    const { onChange, ...other } = props;
+
+    return (
+      <NumericFormat
+        {...other}
+        getInputRef={ref}
+        allowNegative={false}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        thousandSeparator
+        valueIsNumericString
+      />
+    );
+  },
+);
+
 const AdvertPage: React.FC<PageProps> = () => {
-  const [picture, setPicture] = React.useState("")
-  const [title, setTitle] = React.useState("")
-  const [price, setPrice] = React.useState(0)
-  const [description, setDescription] = React.useState("")
+  const [values, setValues] = React.useState<State>({
+    picture: '',
+    title: '',
+    price: '',
+    description: ''
+  });
 
-  const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPicture(event.target.value)
-  }
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
-  }
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPrice(+event.target.value)
-  }
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDescription(event.target.value)
-  }
-
-  const CREATE_ADVERT = gql`
-    mutation ($advertInput: AdvertInput) {
-      createAdvert(advertInput: $advertInput) {
-        id
-        title
-        description
-        price
-        picture
-      }
-    }
-  `
-  const GET_ALLADVERTS = gql`
-  query {
-    allAdverts {
-      id
-      title
-      price
-      description
-      picture
-    }
-  }
-`
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.name === 'price' ? Number(event.target.value) : event.target.value,
+    });
+  };
 
   const [createAdvert, { data, loading, error }] = useMutation(CREATE_ADVERT, {
     refetchQueries: [
@@ -69,12 +76,7 @@ const AdvertPage: React.FC<PageProps> = () => {
 
     createAdvert({
       variables: {
-        advertInput: {
-          title,
-          description,
-          price,
-          picture,
-        },
+        advertInput: values,
       },
     })
     //if (loading) return <>Loading...</>
@@ -95,29 +97,32 @@ const AdvertPage: React.FC<PageProps> = () => {
       >
         <TextField
           placeholder="Picture URL"
-          aria-label="picture"
-          value={picture}
-          onChange={handlePictureChange}
+          name="picture"
+          value={values.picture}
+          onChange={handleChange}
         />
         <TextField
           placeholder="Title"
-          aria-label="title"
-          value={title}
-          onChange={handleTitleChange}
+          name="title"
+          value={values.title}
+          onChange={handleChange}
         />
         <TextField
           placeholder="Price"
-          aria-label="price"
-          value={price}
-          onChange={handlePriceChange}
+          name="price"
+          value={values.price}
+          InputProps={{
+            inputComponent: NumericFormatCustom as any,
+          }}
+          onChange={handleChange}
         />
         <TextField
           placeholder="Description"
-          aria-label="description"
+          name="description"
           multiline
           rows={4}
-          value={description}
-          onChange={handleDescriptionChange}
+          value={values.description}
+          onChange={handleChange}
         />
         <Button onClick={handleAdvertCreate}>Create</Button>
       </Box>

@@ -7,6 +7,7 @@ import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 
 import { gql, useQuery } from "@apollo/client"
+import { GET_ALLADVERTS } from '../../backend/requests'
 
 type adverts = {
   id: string
@@ -15,18 +16,6 @@ type adverts = {
   price: number
   picture: string
 }
-
-const GET_ALLADVERTS = gql`
-  query {
-    allAdverts {
-      id
-      title
-      price
-      description
-      picture
-    }
-  }
-`
 
 export default function AdvertsList() {
   const { loading, error, data } = useQuery(GET_ALLADVERTS)
