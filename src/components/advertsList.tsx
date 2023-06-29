@@ -1,13 +1,12 @@
 import * as React from "react"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
-import CardActions from "@mui/material/CardActions"
 import CardContent from "@mui/material/CardContent"
-import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
+import Image from "mui-image"
 
-import { gql, useQuery } from "@apollo/client"
-import { GET_ALLADVERTS } from '../../backend/requests'
+import { useQuery } from "@apollo/client"
+import { GET_ALLADVERTS } from "../../backend/requests"
 
 type adverts = {
   id: string
@@ -26,12 +25,46 @@ export default function AdvertsList() {
     <>
       {data.allAdverts.map((adv: adverts) => (
         <Card
-          sx={{ marginTop: "1rem", border: 1, borderColor: "grey.500" }}
+          sx={{
+            width: 300,
+            display: "inline-block",
+            overflow: "hidden",
+            mt: "1rem",
+            mr: "1rem",
+            border: 1,
+            borderColor: "grey.300",
+          }}
           key={adv.id}
         >
           <CardContent>
-            <Typography gutterBottom>{adv.title}</Typography>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary">
+            <Image src={adv.picture} height={200} showLoading />
+
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                mt: "1rem",
+              }}
+            >
+              <Typography>{adv.title}</Typography>
+              <Typography sx={{
+                overflow: "hidden",
+                ml: "1rem",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              }}>{adv.price}</Typography>
+            </Box>
+            <Typography
+              sx={{
+                fontSize: "0.8rem",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+              }}
+              color="text.secondary"
+            >
               {adv.description}
             </Typography>
           </CardContent>

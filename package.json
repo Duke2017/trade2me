@@ -14,6 +14,7 @@
     "@mui/material": "^5.12.3",
     "@netlify/functions": "^1.6.0",
     "@prisma/client": "^4.15.0",
+    "dotenv": "^16.3.1",
     "gatsby": "^5.9.0",
     "gatsby-plugin-image": "^3.9.0",
     "gatsby-plugin-manifest": "^5.9.0",
@@ -22,12 +23,17 @@
     "gatsby-transformer-sharp": "^5.9.0",
     "graphql": "^16.6.0",
     "mongodb": "^5.5.0",
+    "mui-image": "^1.0.7",
     "netlify-lambda": "^2.0.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-number-format": "^5.2.2"
+    "react-number-format": "^5.2.2",
+    "telegraf": "^4.12.2"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/mui-image": "^1.0.1",
+    "@types/node": "^20.3.2",
     "prettier": "^2.8.8",
     "prisma": "^4.15.0"
   },
@@ -36,11 +42,14 @@
   ],
   "license": "0BSD",
   "scripts": {
+    "buildtsc": "tsc",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "dbpush": "prisma db push",
-    "start": "netlify dev",
+    "start": "netlify dev && node tgbot/app.js",
+    "start-local": "node tgbot/app.js",
+    "tgstart": "node tgbot/app.js",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
