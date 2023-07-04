@@ -1,0 +1,42 @@
+{
+  "sessions": [
+    {
+      "id": "237665752:237665752",
+      "data": {
+        "courseLike": true,
+        "__scenes": {
+          "state": {},
+          "cursor": 2
+        }
+      }
+    },
+    {
+      "id": "679610117:679610117",
+      "data": {
+        "courseLike": true
+      }
+    },
+    {
+      "id": "312668508:312668508",
+      "data": {
+        "courseLike": true,
+        "__scenes": {
+          "state": {},
+          "cursor": 1
+        }
+      }
+    },
+    {
+      "id": "464167806:464167806",
+      "data": {
+        "courseLike": true
+      }
+    },
+    {
+      "id": "388734819:388734819",
+      "data": {
+        "courseLike": true
+      }
+    }
+  ]
+}

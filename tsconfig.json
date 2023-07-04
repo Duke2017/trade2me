@@ -4,9 +4,10 @@
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
-      "jsx": "react-jsx"
+      "jsx": "react-jsx",
+      "outDir": "./dist"
     },
     "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "Recommended",
-    "outDir": "./dist"
+    "display": "Recommended"
+    
   }

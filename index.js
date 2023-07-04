@@ -21,3 +21,29 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+
+{
+  update_id: 485856767,
+  callback_query: {
+    id: '1020766633380759939',
+    from: {
+      id: 237665752,
+      is_bot: false,
+      first_name: 'Александр',
+      last_name: 'Табаков',
+      username: 'Duke1917plus100',
+      language_code: 'ru'
+    },
+    message: {
+      message_id: 42,
+      from: [Object],
+      chat: [Object],
+      date: 1688061501,
+      text: 'Пить будешь?',
+      reply_markup: [Object]
+    },
+    chat_instance: '9095853181711582183',
+    data: 'no'
+  }
+}

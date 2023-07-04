@@ -28,7 +28,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-number-format": "^5.2.2",
-    "telegraf": "^4.12.2"
+    "telegraf": "^4.12.2",
+    "telegraf-session-local": "^2.1.1"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
@@ -42,14 +43,12 @@
   ],
   "license": "0BSD",
   "scripts": {
-    "buildtsc": "tsc",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "dbpush": "prisma db push",
     "start": "netlify dev && node tgbot/app.js",
-    "start-local": "node tgbot/app.js",
-    "tgstart": "node tgbot/app.js",
+    "start-local": "tsc && node dist/tgbot/app.js",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
