@@ -1,7 +1,5 @@
 [build]
     NODE_VERSION = "18.7.0"
-    command = "netlify-lambda install && mkdir ./public"
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+    command = "yarn"
+    functions = "netlify/functions"
+    publish = "static"
