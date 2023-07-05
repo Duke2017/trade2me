@@ -6,9 +6,9 @@ import { Command } from "./commands/command.class";
 import { StartCommand } from "./commands/start.command";
 import LocalSession from "telegraf-session-local";
 import { Scenes } from 'telegraf';
-import { advertDataWizard } from "./scenes";
+import { advertSceneWizard, mainSceneWizard } from "./scenes";
 
-const stage = new Scenes.Stage<IBotContext>([advertDataWizard]);
+const stage = new Scenes.Stage<IBotContext>([mainSceneWizard, advertSceneWizard]);
 
 class Bot {
     bot: Telegraf<IBotContext>;
