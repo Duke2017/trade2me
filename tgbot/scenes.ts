@@ -1,5 +1,7 @@
 import { Scenes, Markup } from "telegraf"
 import { IBotContext } from "./context/context.interface"
+//import { gql, useMutation } from "@apollo/client"
+//import { GET_ALLADVERTS, CREATE_ADVERT } from '../backend/requests'
 
 const cancelButton = Markup.inlineKeyboard([
   [Markup.button.callback("Отменить создание объявления", "cancel")],
@@ -48,9 +50,9 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       ctx.reply("Слишком коротко, попробуем ещё раз")
       return
     } else {
-      ctx.session.advertData.text = text
+      ctx.session.advertData.description = text
       await ctx.reply(`Заголовок объявления: ${ctx.session.advertData.title}`)
-      await ctx.reply(`Текст объявления: ${ctx.session.advertData.text}`)
+      await ctx.reply(`Текст объявления: ${ctx.session.advertData.description}`)
       await ctx.reply("Введите цену", cancelButton)
     }
 
@@ -66,7 +68,7 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
     } else {
       ctx.session.advertData.price = text
       await ctx.reply(`Заголовок объявления: ${ctx.session.advertData.title}`)
-      await ctx.reply(`Текст объявления: ${ctx.session.advertData.text}`)
+      await ctx.reply(`Текст объявления: ${ctx.session.advertData.description}`)
       await ctx.reply(`Цена: ${ctx.session.advertData.price}`)
 
       await ctx.reply(
@@ -76,7 +78,6 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
     }
 
     console.log("End of creating advert", ctx.session.advertData)
-    // await mySendAdvertDataMomentBeforeErase(ctx.wizard.state.advertData);
   }
 )
 advertSceneWizard.action("cancel", async ctx => {
@@ -84,9 +85,19 @@ advertSceneWizard.action("cancel", async ctx => {
   ctx.scene.enter("mainSceneId")
 })
 advertSceneWizard.action("accept", async ctx => {
+  //await saveAdvertToDatabase(ctx.session.advertData);
   await ctx.reply("Объявление создано успешно")
   ctx.scene.enter("mainSceneId")
 })
+
+// const [createAdvert, { data, loading, error }] = useMutation(CREATE_ADVERT)
+// const saveAdvertToDatabase = (advertData: any) => {
+//   createAdvert({
+//     variables: {
+//       advertInput: advertData,
+//     },
+//   })
+// }
 
 // advertDataWizard.use(ctx => {
 //   console.log(123,ctx.scene.current)
@@ -119,29 +130,3 @@ mainSceneWizard.action("url", ctx => {
   ctx.replyWithHTML(formHtml, { disable_web_page_preview: true })
   return ctx.scene.leave()
 })
-
-//export const advertDataWizard = new Scenes.BaseScene('createAdvertSceneId')
-
-// advertDataWizard.enter((ctx) => {
-//   console.log('enter to advertDataWizard')
-//   ctx.reply('What is your drug?', Markup.inlineKeyboard([
-//     Markup.button.callback('Movie', 'MOVIE_ACTION'),
-//     Markup.button.callback('Theater', 'THEATER_ACTION'),
-//   ]));
-// });
-
-// advertDataWizard.action('THEATER_ACTION', (ctx) => {
-//   ctx.reply('You choose theater');
-//   //@ts-ignore
-//   return ctx.scene.enter('SOME_OTHER_SCENE_ID'); // switch to some other scene
-// });
-
-// advertDataWizard.action('MOVIE_ACTION', (ctx) => {
-//   ctx.reply('You choose movie, your loss');
-//   //@ts-ignore
-//   return ctx.scene.leave(); // exit global namespace
-// });
-
-// advertDataWizard.leave((ctx) => {
-//   ctx.reply('Thank you for your time!');
-// });

@@ -1,12 +1,13 @@
-import { Telegraf, Context, session } from "telegraf";
-import { ConfigService } from "./config/config.service";
-import { IConfigService } from "./config/config.interface";
-import { IBotContext } from "./context/context.interface";
-import { Command } from "./commands/command.class";
-import { StartCommand } from "./commands/start.command";
+import { Telegraf, session } from "telegraf";
+import { ConfigService } from "../../tgbot/config/config.service";
+import { IConfigService } from "../../tgbot/config/config.interface";
+import { IBotContext } from "../../tgbot/context/context.interface";
+import { Command } from "../../tgbot/commands/command.class";
+import { StartCommand } from "../../tgbot/commands/start.command";
 import LocalSession from "telegraf-session-local";
 import { Scenes } from 'telegraf';
-import { advertSceneWizard, mainSceneWizard } from "./scenes";
+import { advertSceneWizard, mainSceneWizard } from "../../tgbot/scenes";
+
 
 const stage = new Scenes.Stage<IBotContext>([mainSceneWizard, advertSceneWizard]);
 
@@ -33,3 +34,13 @@ class Bot {
 
 const bot = new Bot(new ConfigService());
 bot.init();
+
+export const handler = async (event:any) => {
+    try {
+      await bot.bot.handleUpdate(JSON.parse(event.body))
+      return { statusCode: 200, body: "" }
+    } catch (e) {
+      console.error("error in handler:", e)
+      return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" }
+    }
+  }

@@ -47,7 +47,7 @@
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "dbpush": "prisma db push",
-    "start": "netlify dev && node tgbot/app.js",
+    "start": "netlify dev",
     "start-local": "tsc && node dist/tgbot/app.js",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
