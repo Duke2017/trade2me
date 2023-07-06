@@ -37,7 +37,8 @@ const bot = new Bot(new ConfigService());
 bot.init();
 exports.handler = async (event:any) => {
     console.log("Received an update from Telegram!", event.body);
-    return { statusCode: 200, body: "" + event.body };
+    await bot.bot.handleUpdate(JSON.parse(event.body))
+    return { statusCode: 200 };
   };
 
 // export const handler = async (event:any) => {
