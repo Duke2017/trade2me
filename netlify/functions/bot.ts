@@ -42,6 +42,6 @@ export const handler = async (event:any) => {
       return { statusCode: 200, body: "" }
     } catch (e) {
       console.error("error in handler:", e)
-      return { statusCode: 400, body: e }
+      return { statusCode: 400, body: event.body }
     }
   }
