@@ -11,7 +11,7 @@ export class ConfigService implements IConfigService {
         this.config = parsed;
     }
     get(key:string) : string {
-        const res = this.config[key];
+        const res = this.config[key] || process.env[key] || '';
         return res;
     }
 }
