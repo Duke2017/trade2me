@@ -37,8 +37,9 @@ const bot = new Bot(new ConfigService());
 bot.init();
 
 export const handler = async (event:any) => {
+    return { statusCode: 400, body: event.body }
     try {
-      await bot.bot.handleUpdate(JSON.parse(event.body))
+    //  await bot.bot.handleUpdate(JSON.parse(event.body))
       return { statusCode: 200, body: "" }
     } catch (e) {
       console.error("error in handler:", e)
