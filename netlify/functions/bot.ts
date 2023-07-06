@@ -38,7 +38,7 @@ bot.init();
 
 export const handler = async (event:any) => {
     try {
-      await bot.bot.handleUpdate(JSON.parse(event.body))
+      await bot.bot.handleUpdate(event.body)
       return { statusCode: 200, body: "" }
     } catch (e) {
       console.error("error in handler:", e)
