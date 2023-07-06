@@ -4,3 +4,7 @@
     publish = 'public'
 [[plugins]]
   package = "@netlify/plugin-gatsby"
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
