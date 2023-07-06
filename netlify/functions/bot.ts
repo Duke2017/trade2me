@@ -15,7 +15,8 @@ class Bot {
     bot: Telegraf<IBotContext>;
     commands: Command[] = [];
     constructor (private readonly configservice: IConfigService) {
-        this.bot = new Telegraf<IBotContext>(this.configservice.get("TOKEN"));
+        //@ts-ignore
+        this.bot = new Telegraf<IBotContext>(process.env.TOKEN); //this.configservice.get("TOKEN")
         this.bot.use(
             session()
             //new LocalSession({database: "example_db.json"}).middleware()
