@@ -50,6 +50,6 @@ export const handler = async (event:any) => {
       return { statusCode: 200, body: "" }
     } catch (e) {
       console.error("error in handler:", e)
-      return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" + process.env.BOT_TOKEN }
+      return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" + process.env.TOKEN }
     }
   }
