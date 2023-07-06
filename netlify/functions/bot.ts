@@ -16,7 +16,7 @@ class Bot {
     commands: Command[] = [];
     constructor (private readonly configservice: IConfigService) {
         //@ts-ignore
-        this.bot = new Telegraf<IBotContext>(process.env.TOKEN); //this.configservice.get("TOKEN")
+        this.bot = new Telegraf<IBotContext>(this.configservice.get("TOKEN"));
         this.bot.use(
             session()
             //new LocalSession({database: "example_db.json"}).middleware()
@@ -33,12 +33,20 @@ class Bot {
     }
 }
 
-const bot = new Bot(new ConfigService());
-bot.init();
+//const bot = new Bot(new ConfigService());
+ //@ts-ignore
+const bot = new Telegraf<IBotContext>(process.env.TOKEN);
+const commands = [new StartCommand(bot)];
+        for (const command of commands) {
+            command.handle();
+        }
+        
+bot.launch();
+//bot.init();
 
 export const handler = async (event:any) => {
     try {
-      await bot.bot.handleUpdate(JSON.parse(event.body))
+      await bot.handleUpdate(JSON.parse(event.body))
       return { statusCode: 200, body: "" }
     } catch (e) {
       console.error("error in handler:", e)
