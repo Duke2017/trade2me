@@ -1,4 +1,0 @@
-[build]
-    NODE_VERSION = "18.7.0"
-    functions = 'netlify/functions'
-    publish = 'build'
