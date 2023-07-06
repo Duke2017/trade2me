@@ -50,7 +50,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
     "dbpush": "prisma db push",
     "start": "netlify dev",
-    "start-local": "tsc && node dist/tgbot/app.js",
+    "start-local": "tsc && node dist/netlify/functions/bot.js",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"

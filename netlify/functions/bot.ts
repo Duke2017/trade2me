@@ -1,4 +1,4 @@
-import { Telegraf, session } from "telegraf";
+import { Telegraf, Context, session } from "telegraf";
 import { ConfigService } from "../../tgbot/config/config.service";
 import { IConfigService } from "../../tgbot/config/config.interface";
 import { IBotContext } from "../../tgbot/context/context.interface";
@@ -16,7 +16,7 @@ class Bot {
     commands: Command[] = [];
     constructor (private readonly configservice: IConfigService) {
         //@ts-ignore
-        this.bot = new Telegraf<IBotContext>(this.configservice.get("TOKEN"));
+        this.bot = new Telegraf<IBotContext>(process.env.TOKEN || this.configservice.get("TOKEN"))
         this.bot.use(
             session()
             //new LocalSession({database: "example_db.json"}).middleware()
@@ -33,23 +33,15 @@ class Bot {
     }
 }
 
-//const bot = new Bot(new ConfigService());
- //@ts-ignore
-const bot = new Telegraf<IBotContext>(process.env.TOKEN);
-const commands = [new StartCommand(bot)];
-        for (const command of commands) {
-            command.handle();
-        }
-        
-bot.launch();
-//bot.init();
+const bot = new Bot(new ConfigService());
+bot.init();
 
 export const handler = async (event:any) => {
     try {
-      await bot.handleUpdate(JSON.parse(event.body))
+      await bot.bot.handleUpdate(JSON.parse(event.body))
       return { statusCode: 200, body: "" }
     } catch (e) {
       console.error("error in handler:", e)
-      return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" + process.env.TOKEN }
+      return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" }
     }
   }
