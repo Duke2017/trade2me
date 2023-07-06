@@ -1,5 +1,4 @@
 [build]
     NODE_VERSION = "18.7.0"
-    command = "yarn"
-    functions = "netlify/functions"
-    publish = "static"
+    functions = 'netlify/functions'
+    publish = 'build'
