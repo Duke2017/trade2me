@@ -1,6 +1,6 @@
 [build]
     NODE_VERSION = "18.7.0"
-    functions = 'netlify/functions'
+    functions = 'functions'
     publish = 'public'
 [[plugins]]
   package = "@netlify/plugin-gatsby"

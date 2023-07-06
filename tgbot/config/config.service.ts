@@ -6,8 +6,9 @@ export class ConfigService implements IConfigService {
     constructor() {
         const {error, parsed} = config();
         if (error || !parsed) {
-            throw new Error("Ошибка .env");
+          //  throw new Error("Ошибка .env");
         }
+        //@ts-ignore
         this.config = parsed;
     }
     get(key:string) : string {
