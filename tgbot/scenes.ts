@@ -66,7 +66,7 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       ctx.reply("Возможен только числовой ввод, попробуем ещё раз")
       return
     } else {
-      ctx.session.advertData.price = text
+      ctx.session.advertData.price = Number(text)
       await ctx.reply(`Заголовок объявления: ${ctx.session.advertData.title}`)
       await ctx.reply(`Текст объявления: ${ctx.session.advertData.description}`)
       await ctx.reply(`Цена: ${ctx.session.advertData.price}`)
@@ -85,8 +85,10 @@ advertSceneWizard.action("cancel", async ctx => {
   ctx.scene.enter("mainSceneId")
 })
 advertSceneWizard.action("accept", async ctx => {
-  //await saveAdvertToDatabase(ctx.session.advertData);
-  await resolvers.Mutation.createAdvert(null, {advertInput: ctx.session.advertData})
+  //TODO убрать эту срамату, но потом
+  const output = { ...ctx.session.advertData}
+  output.picture = ""
+  await resolvers.Mutation.createAdvert(null, {advertInput: output})
   await ctx.reply("Объявление создано успешно")
   ctx.scene.enter("mainSceneId")
 })
