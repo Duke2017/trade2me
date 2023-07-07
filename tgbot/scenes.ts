@@ -1,7 +1,7 @@
 import { Scenes, Markup } from "telegraf"
 import { IBotContext } from "./context/context.interface"
-//import { gql, useMutation } from "@apollo/client"
-//import { GET_ALLADVERTS, CREATE_ADVERT } from '../backend/requests'
+import { resolvers } from "./../backend/resolvers"
+
 
 const cancelButton = Markup.inlineKeyboard([
   [Markup.button.callback("Отменить создание объявления", "cancel")],
@@ -86,6 +86,7 @@ advertSceneWizard.action("cancel", async ctx => {
 })
 advertSceneWizard.action("accept", async ctx => {
   //await saveAdvertToDatabase(ctx.session.advertData);
+  await resolvers.Mutation.createAdvert(null, {advertInput: ctx.session.advertData})
   await ctx.reply("Объявление создано успешно")
   ctx.scene.enter("mainSceneId")
 })
