@@ -20,14 +20,14 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
   async ctx => {
     console.log("Введите заголовок объявления")
     ctx.reply("Введите заголовок объявления", cancelButton)
-    ctx.session.advertData = {}
+    ctx.state.advertData = {}
     return ctx.wizard.next()
   },
 
   //from title to text
   async ctx => {
-    //@ts-ignore
-    const text = ctx.message?.text
+    // @ts-ignore
+    const text = ctx.message?.text;
     console.log("получен заголовок: ", text)
     if (text.length < 2) {
       ctx.reply("Слишком коротко, попробуем ещё раз")
@@ -36,7 +36,7 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       await ctx.reply(`Заголовок объявления: ${text}`)
       await ctx.reply("Введите текст объявления", cancelButton)
     }
-    ctx.session.advertData.title = text
+    ctx.state.advertData.title = text
     return ctx.wizard.next()
   },
 
@@ -50,9 +50,9 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       ctx.reply("Слишком коротко, попробуем ещё раз")
       return
     } else {
-      ctx.session.advertData.description = text
-      await ctx.reply(`Заголовок объявления: ${ctx.session.advertData.title}`)
-      await ctx.reply(`Текст объявления: ${ctx.session.advertData.description}`)
+      ctx.state.advertData.description = text
+      await ctx.reply(`Заголовок объявления: ${ctx.state.advertData.title}`)
+      await ctx.reply(`Текст объявления: ${ctx.state.advertData.description}`)
       await ctx.reply("Введите цену", cancelButton)
     }
 
@@ -66,10 +66,10 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       ctx.reply("Возможен только числовой ввод, попробуем ещё раз")
       return
     } else {
-      ctx.session.advertData.price = Number(text)
-      await ctx.reply(`Заголовок объявления: ${ctx.session.advertData.title}`)
-      await ctx.reply(`Текст объявления: ${ctx.session.advertData.description}`)
-      await ctx.reply(`Цена: ${ctx.session.advertData.price}`)
+      ctx.state.advertData.price = Number(text)
+      await ctx.reply(`Заголовок объявления: ${ctx.state.advertData.title}`)
+      await ctx.reply(`Текст объявления: ${ctx.state.advertData.description}`)
+      await ctx.reply(`Цена: ${ctx.state.advertData.price}`)
 
       await ctx.reply(
         'Всё верно? Создаем объявление?',
@@ -77,7 +77,7 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       )
     }
 
-    console.log("End of creating advert", ctx.session.advertData)
+    console.log("End of creating advert", ctx.state.advertData)
   }
 )
 advertSceneWizard.action("cancel", async ctx => {
@@ -85,22 +85,11 @@ advertSceneWizard.action("cancel", async ctx => {
   ctx.scene.enter("mainSceneId")
 })
 advertSceneWizard.action("accept", async ctx => {
-  //TODO убрать эту срамату, но потом
-  const output = { ...ctx.session.advertData}
-  output.picture = ""
+  const output = { ...ctx.state.advertData, picture: '' };
   await resolvers.Mutation.createAdvert(null, {advertInput: output})
   await ctx.reply("Объявление создано успешно")
   ctx.scene.enter("mainSceneId")
 })
-
-// const [createAdvert, { data, loading, error }] = useMutation(CREATE_ADVERT)
-// const saveAdvertToDatabase = (advertData: any) => {
-//   createAdvert({
-//     variables: {
-//       advertInput: advertData,
-//     },
-//   })
-// }
 
 // advertDataWizard.use(ctx => {
 //   console.log(123,ctx.scene.current)
@@ -131,5 +120,5 @@ mainSceneWizard.action("create", ctx => {
 mainSceneWizard.action("url", ctx => {
   const formHtml = `Да как вы надоели, сохрани уже себе где-нибудь: <a>https://ya.ru</a>`
   ctx.replyWithHTML(formHtml, { disable_web_page_preview: true })
-  return ctx.scene.leave()
+  //return ctx.scene.leave()
 })

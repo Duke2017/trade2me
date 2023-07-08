@@ -1,23 +1,21 @@
 import { Context, Scenes, session } from "telegraf";
+import { WizardContext } from "telegraf/typings/scenes";
 import { Any } from "telegraf/typings/util";
-// export interface SessionData {
-//     courseLike: boolean;
-// };
-interface IAdvert extends Scenes.WizardContext {
+export interface IBotSession extends Scenes.WizardSessionData {
     advertData: {
-        title: String,
-        price: Number,
-        description: String,
-        picture: String
+      title: string
+      price: number
+      description: string
+      picture: string
     }
-}
-
-export interface IBotContext extends Scenes.WizardContext {
-        // will be available under `ctx.session`
-        session: any;
-       
-        // // declare scene type
-        // scene: Scenes.SceneContextScene<IBotContext, Scenes.WizardSessionData>;
-        // // declare wizard type
-        // wizard: Scenes.WizardContextWizard<IBotContext>;
-}
+  }
+  
+  export interface IBotContext extends Context {
+    // will be available under `ctx.session`
+    // session: any;
+  
+    // // declare scene type
+    scene: Scenes.SceneContextScene<IBotContext, IBotSession>
+    // // declare wizard type
+    wizard: Scenes.WizardContextWizard<IBotContext>
+  }

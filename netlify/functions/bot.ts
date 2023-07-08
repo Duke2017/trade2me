@@ -9,13 +9,12 @@ import { Scenes } from 'telegraf';
 import { advertSceneWizard, mainSceneWizard } from "../../tgbot/scenes";
 
 
-const stage = new Scenes.Stage<IBotContext>([mainSceneWizard, advertSceneWizard]);
+const stage = new Scenes.Stage([mainSceneWizard, advertSceneWizard]);
 
 class Bot {
     bot: Telegraf<IBotContext>;
     commands: Command[] = [];
     constructor (private readonly configservice: IConfigService) {
-        //@ts-ignore
         this.bot = new Telegraf<IBotContext>(process.env.TOKEN || this.configservice.get("TOKEN"))
         this.bot.use(
             session()
