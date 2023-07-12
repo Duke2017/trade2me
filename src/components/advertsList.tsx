@@ -7,14 +7,7 @@ import Image from "mui-image"
 
 import { useQuery } from "@apollo/client"
 import { GET_ALLADVERTS } from "../../backend/requests"
-
-type adverts = {
-  id: string
-  title: string
-  description: string
-  price: number
-  picture: string
-}
+import { advertType } from "../../types"
 
 export default function AdvertsList() {
   const { loading, error, data } = useQuery(GET_ALLADVERTS)
@@ -23,7 +16,7 @@ export default function AdvertsList() {
 
   return (
     <>
-      {data.allAdverts.map((adv: adverts) => (
+      {data.allAdverts.map((adv: advertType) => (
         <Card
           sx={{
             width: 300,

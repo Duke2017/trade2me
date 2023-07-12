@@ -15,7 +15,7 @@ type DataProps = {
   }
 }
 
-interface State {
+interface IState {
   picture: string;
   title: string;
   price: number | '';
@@ -51,7 +51,7 @@ const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(
 );
 
 const AdvertPage: React.FC<PageProps> = () => {
-  const [values, setValues] = React.useState<State>({
+  const [values, setValues] = React.useState<IState>({
     picture: '',
     title: '',
     price: '',

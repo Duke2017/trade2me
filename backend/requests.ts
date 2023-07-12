@@ -8,6 +8,7 @@ query {
     price
     description
     picture
+    userId
   }
 }
 `
@@ -20,6 +21,7 @@ mutation ($advertInput: AdvertInput) {
     description
     price
     picture
+    userId
   }
 }
 `

@@ -1,19 +1,14 @@
 import { PrismaClient } from "@prisma/client"
+import { advertInputType } from "../types"
 
 const prisma = new PrismaClient()
 
-type advertInput = {
-  advertInput: {
-    title: string,
-    price: number,
-    description: string,
-    picture: string
-  }
+interface updateAdvertType extends advertInputType {
+  id: string
 }
 
 //(parent, args, context, info)
 export const resolvers = {
-
   Query: {
     allAdverts: async () => {
       return await prisma.advert.findMany()
@@ -28,7 +23,7 @@ export const resolvers = {
   Mutation: {
     createAdvert: async (
       _: any,
-      { advertInput: { title, description, price, picture } }: advertInput
+      { advertInput: { title, description, price, picture, userId } }: advertInputType
     ) => {
       return await prisma.advert.create({
         data: {
@@ -36,12 +31,13 @@ export const resolvers = {
           description: description,
           price: price,
           picture: picture,
+          userId: userId
         },
       })
     },
     updateAdvert: async (
       _: any,
-      { id, AdvertInput: { title, description, price, picture } }: any
+      { id, advertInput: { title, description, price, picture } }: updateAdvertType
     ) => {
       return await prisma.advert.update({
         where: { id: id },

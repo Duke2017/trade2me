@@ -16,4 +16,5 @@ model Advert {
   price       Int
   description String
   picture     String
+  userId      String
 }

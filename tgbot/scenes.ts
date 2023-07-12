@@ -9,7 +9,7 @@ const cancelButton = Markup.inlineKeyboard([
 const acceptOrRejectButton = Markup.inlineKeyboard([
   [
     Markup.button.callback("Создать", "accept"),
-    Markup.button.callback("Отменить создание", "cancel"),
+    Markup.button.callback("Отменить", "cancel"),
   ],
 ])
 
@@ -67,6 +67,7 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       return
     } else {
       ctx.state.advertData.price = Number(text)
+      ctx.state.advertData.userId = ctx.from?.id
       await ctx.reply(`Заголовок объявления: ${ctx.state.advertData.title}`)
       await ctx.reply(`Текст объявления: ${ctx.state.advertData.description}`)
       await ctx.reply(`Цена: ${ctx.state.advertData.price}`)

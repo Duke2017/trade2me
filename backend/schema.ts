@@ -7,9 +7,10 @@ export const typeDefs = `#graphql
   type Advert {
     id: ID!
     title: String!
-    price: Int
+    price: Int!
     description: String!
     picture: String
+    userId: String!
   }
 
   input AdvertInput {
@@ -17,6 +18,7 @@ export const typeDefs = `#graphql
     price: Int
     description: String
     picture: String
+    userId: String
   }
   type Mutation {
     createAdvert(advertInput: AdvertInput): Advert
