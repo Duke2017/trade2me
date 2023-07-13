@@ -1,4 +1,4 @@
-import { Telegraf, Context, session } from "telegraf";
+import { Telegraf, session } from "telegraf";
 import { ConfigService } from "../../tgbot/config/config.service";
 import { IConfigService } from "../../tgbot/config/config.interface";
 import { IBotContext } from "../../tgbot/context/context.interface";
@@ -15,7 +15,7 @@ class Bot {
     bot: Telegraf<IBotContext>;
     commands: Command[] = [];
     constructor (private readonly configservice: IConfigService) {
-        this.bot = new Telegraf<IBotContext>(process.env.TOKEN || this.configservice.get("TOKEN"))
+        this.bot = new Telegraf<IBotContext>(this.configservice.get("TOKEN"))
         this.bot.use(
             session()
             //new LocalSession({database: "example_db.json"}).middleware()

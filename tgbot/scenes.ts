@@ -20,7 +20,9 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
   async ctx => {
     console.log("Введите заголовок объявления")
     ctx.reply("Введите заголовок объявления", cancelButton)
-    ctx.state.advertData = {}
+    ctx.session.advertData = {
+      title: '', price: 0, description: '', picture: '', userId: ''
+    }
     return ctx.wizard.next()
   },
 
@@ -36,7 +38,8 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       await ctx.reply(`Заголовок объявления: ${text}`)
       await ctx.reply("Введите текст объявления", cancelButton)
     }
-    ctx.state.advertData.title = text
+
+    ctx.session.advertData.title = text
     return ctx.wizard.next()
   },
 
@@ -50,9 +53,9 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       ctx.reply("Слишком коротко, попробуем ещё раз")
       return
     } else {
-      ctx.state.advertData.description = text
-      await ctx.reply(`Заголовок объявления: ${ctx.state.advertData.title}`)
-      await ctx.reply(`Текст объявления: ${ctx.state.advertData.description}`)
+      ctx.session.advertData.description = text
+      await ctx.reply(`Заголовок объявления: ${ctx.session.advertData.title}`)
+      await ctx.reply(`Текст объявления: ${ctx.session.advertData.description}`)
       await ctx.reply("Введите цену", cancelButton)
     }
 
@@ -66,11 +69,11 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       ctx.reply("Возможен только числовой ввод, попробуем ещё раз")
       return
     } else {
-      ctx.state.advertData.price = Number(text)
-      ctx.state.advertData.userId = ctx.from?.id
-      await ctx.reply(`Заголовок объявления: ${ctx.state.advertData.title}`)
-      await ctx.reply(`Текст объявления: ${ctx.state.advertData.description}`)
-      await ctx.reply(`Цена: ${ctx.state.advertData.price}`)
+      ctx.session.advertData.price = Number(text)
+      ctx.session.advertData.userId = String(ctx.from?.id)
+      await ctx.reply(`Заголовок объявления: ${ctx.session.advertData.title}`)
+      await ctx.reply(`Текст объявления: ${ctx.session.advertData.description}`)
+      await ctx.reply(`Цена: ${ctx.session.advertData.price}`)
 
       await ctx.reply(
         'Всё верно? Создаем объявление?',
@@ -78,7 +81,7 @@ export const advertSceneWizard = new Scenes.WizardScene<IBotContext>(
       )
     }
 
-    console.log("End of creating advert", ctx.state.advertData)
+    console.log("End of creating advert", ctx.session.advertData)
   }
 )
 advertSceneWizard.action("cancel", async ctx => {
@@ -86,8 +89,7 @@ advertSceneWizard.action("cancel", async ctx => {
   ctx.scene.enter("mainSceneId")
 })
 advertSceneWizard.action("accept", async ctx => {
-  const output = { ...ctx.state.advertData, picture: '' };
-  await resolvers.Mutation.createAdvert(null, {advertInput: output})
+  await resolvers.Mutation.createAdvert(null, {advertInput: ctx.session.advertData})
   await ctx.reply("Объявление создано успешно")
   ctx.scene.enter("mainSceneId")
 })

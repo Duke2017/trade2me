@@ -1,5 +1,5 @@
 export type advertType = {
-  id: string
+  id?: string
   title: string
   price: number
   description: string
