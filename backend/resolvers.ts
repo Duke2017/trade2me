@@ -10,8 +10,10 @@ interface updateAdvertType extends advertInputType {
 //(parent, args, context, info)
 export const resolvers = {
   Query: {
-    allAdverts: async () => {
-      return await prisma.advert.findMany()
+    allAdverts: async (_: any, { userId}: any) => {
+      return await prisma.advert.findMany({
+         where: {userId: userId}
+      })
     },
     advert: async (_: any, { id }: any) => {
       return await prisma.advert.findFirst({

@@ -9,7 +9,10 @@ import MenuItem from "@mui/material/MenuItem"
 import Menu from "@mui/material/Menu"
 import { navigate } from "gatsby"
 
-export default function MenuAppBar({forPage}: any) {
+interface IHeaderProps {
+  forPage: string
+}
+export default function Header({forPage} : IHeaderProps) {
   const [auth, setAuth] = React.useState(true)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -40,11 +43,12 @@ export default function MenuAppBar({forPage}: any) {
           <AccountCircle />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          All adverts
+          {/* All adverts */} {forPage == "main" && "Все объявления"}
+          {forPage == "usersadverts" && "Объявления пользователя"}
         </Typography>
         {auth && (
           <div>
-            {forPage == "main" && (
+            {forPage == "main Removed" && (
               <IconButton
                 size="large"
                 color="inherit"

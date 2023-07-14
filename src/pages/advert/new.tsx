@@ -1,7 +1,7 @@
 import * as React from "react"
 import { PageProps, HeadFC, navigate } from "gatsby"
 import { Box, Button, TextField } from "@mui/material"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 
 import Layout from "../../components/layout"

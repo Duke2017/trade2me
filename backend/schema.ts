@@ -1,6 +1,6 @@
 export const typeDefs = `#graphql
   type Query {
-    allAdverts: [Advert!]!
+    allAdverts(userId: String): [Advert!]!
     advert(id: ID!): Advert! 
   }
 

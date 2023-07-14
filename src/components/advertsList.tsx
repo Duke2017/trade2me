@@ -9,8 +9,14 @@ import { useQuery } from "@apollo/client"
 import { GET_ALLADVERTS } from "../../backend/requests"
 import { advertType } from "../../types"
 
-export default function AdvertsList() {
-  const { loading, error, data } = useQuery(GET_ALLADVERTS)
+interface IHeaderProps {
+  userId?: string
+}
+export default function AdvertsList({userId}:IHeaderProps) {
+  const { loading, error, data } = useQuery(GET_ALLADVERTS, {
+    variables: {userId}
+  })
+  console.log('userId',userId)
   if (loading) return <>Loading...</>
   if (error) return <>Error! {error.message}</>
 
