@@ -28,7 +28,7 @@ class Bot {
             command.handle();
         }
         
-       // this.bot.launch();
+      // this.bot.launch();
     }
 }
 

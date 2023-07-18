@@ -14,6 +14,7 @@
     "@mui/material": "^5.12.3",
     "@netlify/functions": "^1.6.0",
     "@prisma/client": "^4.15.0",
+    "cloudinary": "^1.37.3",
     "dotenv": "^16.3.1",
     "gatsby": "^5.9.0",
     "gatsby-plugin-image": "^3.9.0",
