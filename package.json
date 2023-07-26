@@ -1,15 +1,16 @@
 {
   "name": "gatsby-starter-default",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Service for simple advert submission via telegram",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Alexandr Tabakov <bel2017@gmail.com>",
   "dependencies": {
     "@apollo/client": "^3.7.14",
     "@apollo/server": "^4.7.1",
     "@as-integrations/aws-lambda": "^2.0.1",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.5",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.3",
     "@netlify/functions": "^1.6.0",

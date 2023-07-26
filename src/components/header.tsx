@@ -29,7 +29,7 @@ export default function Header({forPage} : IHeaderProps) {
   }
 
   return (
-    <AppBar position="static" sx={{ mb: 1 }}>
+    <AppBar position="static" sx={{ mb: 1, backgroundColor: "none" }}>
       <Toolbar>
         <IconButton
           size="large"

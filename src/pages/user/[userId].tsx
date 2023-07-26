@@ -11,7 +11,7 @@ type DataProps = {
   }
 }
 
-const AdvertPage: React.FC<PageProps> = (pageProps) => {
+const UserPage: React.FC<PageProps> = (pageProps) => {
   const userId = pageProps.params.userId
   return (
     <Layout headerButtonsFor="usersadverts">
@@ -27,4 +27,4 @@ const AdvertPage: React.FC<PageProps> = (pageProps) => {
  */
 export const Head: HeadFC<DataProps> = () => <Seo title="User's adverts" />
 
-export default AdvertPage
+export default UserPage

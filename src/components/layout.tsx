@@ -8,6 +8,19 @@
 import * as React from "react"
 
 import Header from "./header"
+import { ThemeProvider } from "@mui/material"
+import { createTheme } from '@mui/material/styles';
+
+let theme = createTheme({
+  palette: {
+    primary: {
+      main: '#fff',
+    },
+  },
+  typography: {
+    fontSize: 12
+  }
+});
 
 type layout = {
   children: JSX.Element,
@@ -16,10 +29,10 @@ type layout = {
 const Layout = ({ children, headerButtonsFor }:layout) => {
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header forPage={headerButtonsFor}/>
       <div>{children}</div>
-    </>
+    </ThemeProvider>
   )
 }
 

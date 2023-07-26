@@ -12,6 +12,18 @@ export const GET_ALLADVERTS = gql`
     }
   }
 `
+export const GET_ADVERT = gql`
+  query ($id: ID!) {
+    advert(id: $id) {
+      id
+      title
+      description
+      price
+      picture
+      userId
+    }
+  }
+`
 
 export const CREATE_ADVERT = gql`
   mutation ($advertInput: AdvertInput) {
